@@ -1,4 +1,4 @@
-export interface DatabaseInterface {
-  // Add method signatures that both services will implement
-
+export abstract class DatabaseService {
+  abstract initDatabase(): void;
+  abstract createTables(): void;
 }

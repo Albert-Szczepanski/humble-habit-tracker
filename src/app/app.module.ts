@@ -6,15 +6,16 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {SqlService} from "./common/services/database/sql.service";
-import {SQLite} from "@awesome-cordova-plugins/sqlite/ngx";
+import {DatabaseModule} from "./common/services/database/database.module";
+
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot({
     mode: 'md'
-  }), AppRoutingModule],
-  providers: [SQLite, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SqlService],
+  }), AppRoutingModule, DatabaseModule],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

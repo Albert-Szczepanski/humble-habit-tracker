@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
 import {SQLite, SQLiteObject} from "@awesome-cordova-plugins/sqlite/ngx";
 import {Platform} from "@ionic/angular";
-import {DatabaseInterface} from "./database.interface";
+import {DatabaseService} from "./database.interface";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SqlService implements DatabaseInterface{
+export class SqlService extends DatabaseService{
   private db: SQLiteObject | undefined;
   constructor(
     private platform: Platform,
     private sql: SQLite) {
+    super();
     this.platform.ready().then(() => {
       this.initDatabase();
     });
   }
 
-  private initDatabase(): void {
-    this.sql.create({
+  async initDatabase(): Promise<void> {
+    await this.sql.create({
       name: 'hht.db',
       location: 'default'
     })
@@ -28,7 +29,7 @@ export class SqlService implements DatabaseInterface{
       .catch(e => console.log(e));
   }
 
-  private createTables(): void {
+  createTables(): void {
     if (!this.db)
       return;
     this.db.executeSql('CREATE TABLE IF NOT EXISTS myTable (id INTEGER PRIMARY KEY, name TEXT, description TEXT)', [])

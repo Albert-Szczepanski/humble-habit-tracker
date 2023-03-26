@@ -18,4 +18,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  it('should have ion-router-outlet', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('ion-router-outlet')).toBeTruthy();
+  });
+
 });
