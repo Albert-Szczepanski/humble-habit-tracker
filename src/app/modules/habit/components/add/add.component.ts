@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {DatabaseService} from "../../../../common/services/database/database.interface";
+import {DatabaseService} from "../../../../common/services/database/database.service";
 
 @Component({
   selector: 'habit-add',

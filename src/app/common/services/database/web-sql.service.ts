@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {DatabaseService} from "./database.interface";
+import {DatabaseService} from "./database.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,20 @@ export class WebSqlService extends DatabaseService{
     // Create tables
     this.db.transaction((tx: any) => {
       tx.executeSql('CREATE TABLE IF NOT EXISTS myTable (id INTEGER PRIMARY KEY, name TEXT, description TEXT)');
+    });
+  }
+
+  async executeSql(sql: string, params: any[]): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.db.transaction((tx: any) => {
+        tx.executeSql(sql, params,
+          (tx: any, res: any) => {
+            resolve(res);
+          },
+          (tx: any, err: any) => {
+            reject(err);
+          });
+      });
     });
   }
 }
